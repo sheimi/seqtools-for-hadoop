@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="all" name="seqtools">
+	<property name="src" location="src" />
+	<property name="src.lib" location="lib" />
+	<property name="build.dir" location="build" />
+	<property name="build.bin" location="${build.dir}/bin" />
+	<property name="build.dist" location="${build.dir}/dist" />
+	<property name="user.name" value="sheimi" />
+
+	<path id="compile.classpath">
+		<pathelement location="${build.bin}" />
+		<fileset dir="${src.lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dist}" />
+		<mkdir dir="${build.bin}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+
+		<javac srcdir="${src}" destdir="${build.bin}">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile" description="generate the distribution">
+		<jar destfile="${build.dist}/seqtools.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<!--
+				<attribute name="Main-Class" value="me.sheimi.driver.Driver" />-->
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="${build.bin}" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/ant.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/commons-lang-2.4.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/commons-configuration-1.6.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/commons-logging-1.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/log4j-1.2.14.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/hadoop-core-1.0.1.jar" />
+		</jar>
+	</target>
+	<target name="clean">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build.dir}" />
+    <delete dir="bin" />
+	</target>
+
+  <target name="all" depends="clean, dist">
+  </target>
+
+</project>
