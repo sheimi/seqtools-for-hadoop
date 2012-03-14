@@ -86,6 +86,9 @@ public class TarToSeqFile {
             while ((entry = input.getNextEntry()) != null) {
                 if (entry.isDirectory()) { continue; }
                 String filename = entry.getName();
+                if (filename.charAt(0) == '.') {
+                	continue;
+                }
                 byte[] data = TarToSeqFile.getBytes(input, entry.getSize());
                 System.out.printf("%s %d %d\n", filename, entry.getSize(), data.length);
                 

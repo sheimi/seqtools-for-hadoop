@@ -37,6 +37,10 @@ public class SequenceFileStorage extends StoreFunc {
 	@Override
 	public void putNext(Tuple tuple) throws IOException {
 		// TODO Auto-generated method stub
+		if (tuple.size() < 2) {
+			System.out.println(tuple.size());
+			return;
+		}
 		key.set(tuple.get(0).toString());
 		byte[] data = ((DataByteArray)tuple.get(1)).get(); // the real bytes
         byte[] bytes = new byte[data.length + LocalSetup.SIZE_LEN];//bytes length
