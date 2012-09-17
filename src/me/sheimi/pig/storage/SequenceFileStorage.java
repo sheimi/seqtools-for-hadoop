@@ -25,7 +25,6 @@ public class SequenceFileStorage extends StoreFunc {
 	
 	@Override
 	public OutputFormat getOutputFormat() throws IOException {
-		// TODO Auto-generated method stub
 		return new SequenceFileOutputFormat<Text, BytesWritable>();
 	}
 
@@ -36,37 +35,34 @@ public class SequenceFileStorage extends StoreFunc {
 
 	@Override
 	public void putNext(Tuple tuple) throws IOException {
-		// TODO Auto-generated method stub
 		if (tuple.size() < 2) {
 			System.out.println(tuple.size());
 			return;
 		}
 		key.set(tuple.get(0).toString());
 		byte[] data = ((DataByteArray)tuple.get(1)).get(); // the real bytes
-        byte[] bytes = new byte[data.length + LocalSetup.SIZE_LEN];//bytes length
-        byte[] size_byte = String.valueOf(data.length).getBytes();
-        for (int i = 1; i <= LocalSetup.SIZE_LEN; i++) {
-        	if (size_byte.length >= i) {
-        		bytes[LocalSetup.SIZE_LEN-i] = size_byte[size_byte.length-i];
-        	} else {
-        		bytes[LocalSetup.SIZE_LEN-i] = '0';
-        	}
-        }
-        for (int i = 0; i < data.length; i++) {
-        	bytes[i+LocalSetup.SIZE_LEN] = data[i];
-        }
-        value.set(bytes, 0, bytes.length);
-        try {
+    byte[] bytes = new byte[data.length + LocalSetup.SIZE_LEN];//bytes length
+    byte[] size_byte = String.valueOf(data.length).getBytes();
+    for (int i = 1; i <= LocalSetup.SIZE_LEN; i++) {
+      if (size_byte.length >= i) {
+        bytes[LocalSetup.SIZE_LEN-i] = size_byte[size_byte.length-i];
+      } else {
+        bytes[LocalSetup.SIZE_LEN-i] = '0';
+      }
+    }
+    for (int i = 0; i < data.length; i++) {
+      bytes[i+LocalSetup.SIZE_LEN] = data[i];
+    }
+    value.set(bytes, 0, bytes.length);
+    try {
 			writer.write(key, value);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void setStoreLocation(String location, Job job) throws IOException {
-		// TODO Auto-generated method stub
 	    job.setOutputKeyClass(Text.class);
 	    job.setOutputValueClass(BytesWritable.class);
 	    job.setOutputFormatClass(SequenceFileOutputFormat.class);

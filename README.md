@@ -26,5 +26,9 @@ Examples
     register seqtools.jar;
     a = LOAD '/seq_test'  USING me.sheimi.pig.storage.SequenceFileLoader AS (name, data);
     b = foreach a generate name;
+    -- Java
     c = foreach a generate name, me.sheimi.pig.eval.demo.ToBMP(data);
+    -- Native (CPP and OpenCV)
+    -- should copy libcvjni.so to java.library.path
+    c = foreach a generate name, me.sheimi.pig.eval.BytesNativeEvalFunc(data);
     store c into '/output' using me.sheimi.pig.storage.SequenceFileStorage;
