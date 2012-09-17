@@ -5,6 +5,8 @@
 	<property name="build.dir" location="build" />
 	<property name="build.bin" location="${build.dir}/bin" />
 	<property name="build.dist" location="${build.dir}/dist" />
+  <property name="build.jar" location="${build.dist}/seqtools.jar" />
+  <property name="bin.jar" location="bin/seqtools.jar" />
 	<property name="user.name" value="sheimi" />
 
 	<path id="compile.classpath">
@@ -32,7 +34,7 @@
 	</target>
 
 	<target name="dist" depends="compile" description="generate the distribution">
-		<jar destfile="${build.dist}/seqtools.jar" filesetmanifest="mergewithoutmain">
+		<jar destfile="${build.jar}" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<!--
 				<attribute name="Main-Class" value="me.sheimi.driver.Driver" />-->
@@ -46,11 +48,11 @@
 			<zipfileset excludes="META-INF/*.SF" src="./lib/log4j-1.2.15.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="./lib/hadoop-core-1.0.3.jar" />
 		</jar>
+    <copy file="${build.jar}" tofile="${bin.jar}" />
 	</target>
 	<target name="clean">
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build.dir}" />
-    <delete dir="bin" />
 	</target>
 
   <target name="all" depends="clean, dist">
