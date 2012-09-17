@@ -38,6 +38,7 @@ class SeqToolShell(object):
         if src is None or des is None:
             self.__exit()
         cmd = self.cmd_tpl + [main_class, src, des]
+        print ' '.join(cmd)
         subprocess.call(cmd)
 
     def seq_to_tar(self):
