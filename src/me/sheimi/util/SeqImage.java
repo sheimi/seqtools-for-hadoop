@@ -39,7 +39,7 @@ public class SeqImage {
       byte[] size = String.format(SIZE_FORMATER, image.length).getBytes();
       byte[] encoded = new byte[SIZE_LEN + image.length];
       System.arraycopy(size, 0, encoded, 0, size.length);
-      System.arraycopy(image, 0, encoded, size.length, encoded.length);
+      System.arraycopy(image, 0, encoded, size.length, image.length);
     }
     return encoded;
   }
