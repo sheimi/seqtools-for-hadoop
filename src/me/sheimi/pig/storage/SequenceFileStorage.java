@@ -16,6 +16,8 @@ import org.apache.pig.StoreFunc;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.Tuple;
 
+import me.sheimi.util.SeqImage;
+
 public class SequenceFileStorage extends StoreFunc {
 	
 	RecordWriter writer;
@@ -41,19 +43,11 @@ public class SequenceFileStorage extends StoreFunc {
 		}
 		key.set(tuple.get(0).toString());
 		byte[] data = ((DataByteArray)tuple.get(1)).get(); // the real bytes
-    byte[] bytes = new byte[data.length + LocalSetup.SIZE_LEN];//bytes length
-    byte[] size_byte = String.valueOf(data.length).getBytes();
-    for (int i = 1; i <= LocalSetup.SIZE_LEN; i++) {
-      if (size_byte.length >= i) {
-        bytes[LocalSetup.SIZE_LEN-i] = size_byte[size_byte.length-i];
-      } else {
-        bytes[LocalSetup.SIZE_LEN-i] = '0';
-      }
-    }
-    for (int i = 0; i < data.length; i++) {
-      bytes[i+LocalSetup.SIZE_LEN] = data[i];
-    }
-    value.set(bytes, 0, bytes.length);
+    
+    SeqImage image = new SeqImage(data);
+    byte[] encoded = image.encode();
+    value.set(encoded, 0, encoded.length);
+
     try {
 			writer.write(key, value);
 		} catch (InterruptedException e) {

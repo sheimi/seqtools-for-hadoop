@@ -56,7 +56,7 @@ public class SeqImage {
 
   public static int decodeSize(byte[] src) {
     byte[] len = Arrays.copyOfRange(src, 0, SIZE_LEN);
-    int size = Integer.parseInt(new String(len)); 
+    int size = Integer.parseInt(new String(len).trim()); 
     return size;
   }
 

@@ -23,6 +23,8 @@ import org.apache.pig.data.DataType;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 
+import me.sheimi.util.SeqImage;
+
 /**
  * A Loader for My Specific SequenceFiles. Key is Text (the filename) Value is
  * BytesWritable
@@ -53,17 +55,8 @@ public class SequenceFileLoader extends FileInputLoadFunc {
 
 	protected Object translateBytesWritable(BytesWritable w) {
 		byte[] data = w.getBytes();
-		byte[] size_byte = new byte[LocalSetup.SIZE_LEN];
-		for (int i = 0; i < LocalSetup.SIZE_LEN; i++) {
-			size_byte[i] = data[i];
-		}
-		int size = Integer.parseInt(new String(size_byte));
-		byte[] render = new byte[size];
-		for (int i = 0; i < size; i++) {
-			int j = i + LocalSetup.SIZE_LEN;
-			render[i] = data[j];
-		}
-		return new DataByteArray(render);
+    SeqImage image = SeqImage.decode(data);
+		return new DataByteArray(image.getImage());
 	}
 
 	@Override
