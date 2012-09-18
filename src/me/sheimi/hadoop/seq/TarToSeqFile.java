@@ -113,26 +113,7 @@ public class TarToSeqFile {
       throw new Exception("A file in the tar archive is too large.");
     }
     
-    //put the size of file ahead of the real content
-    int length = (int)size;
-    /*
-    byte[] bytes = new byte[length + LocalSetup.SIZE_LEN];
-    byte[] size_byte = String.valueOf(length).getBytes();
-    for (int i = 1; i <= LocalSetup.SIZE_LEN; i++) {
-      if (size_byte.length >= i) {
-        bytes[LocalSetup.SIZE_LEN-i] = size_byte[size_byte.length-i];
-      } else {
-        bytes[LocalSetup.SIZE_LEN-i] = '0';
-      }
-    }
-    int offset = LocalSetup.SIZE_LEN;
-    int numRead = 0;
-    while (offset < bytes.length &&
-           (numRead = input.read(bytes, offset, bytes.length - offset)) >= 0) {
-      offset += numRead;
-    }
-    */
-    SeqImage image = new SeqImage(input, length);
+    SeqImage image = new SeqImage(input, (int)size);
     byte[] bytes = image.encode();
     return bytes;
   }
