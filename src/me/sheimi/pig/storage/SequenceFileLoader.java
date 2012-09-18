@@ -23,7 +23,7 @@ import org.apache.pig.data.DataType;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 
-import me.sheimi.util.SeqImage;
+import me.sheimi.magic.image.*;
 
 /**
  * A Loader for My Specific SequenceFiles. Key is Text (the filename) Value is
@@ -55,7 +55,7 @@ public class SequenceFileLoader extends FileInputLoadFunc {
 
 	protected Object translateBytesWritable(BytesWritable w) {
 		byte[] data = w.getBytes();
-    SeqImage image = SeqImage.decode(data);
+    Image image = Image.decode(data, null);
 		return new DataByteArray(image.getImage());
 	}
 

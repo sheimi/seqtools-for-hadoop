@@ -16,7 +16,7 @@ import org.apache.pig.StoreFunc;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.Tuple;
 
-import me.sheimi.util.SeqImage;
+import me.sheimi.magic.image.*;
 
 public class SequenceFileStorage extends StoreFunc {
 	
@@ -44,7 +44,7 @@ public class SequenceFileStorage extends StoreFunc {
 		key.set(tuple.get(0).toString());
 		byte[] data = ((DataByteArray)tuple.get(1)).get(); // the real bytes
     
-    SeqImage image = new SeqImage(data);
+    Image image = new Image(data, null);
     byte[] encoded = image.encode();
     value.set(encoded, 0, encoded.length);
 
