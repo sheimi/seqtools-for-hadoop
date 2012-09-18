@@ -53,11 +53,8 @@ class SeqToolShell(object):
         print ' '.join(cmd)
         subprocess.call(cmd)
 
-    def seq_to_tar(self):
-        self.__src_des('me.sheimi.hadoop.seq.SeqFileToTar')
-
-    def tar_to_seq(self):
-        self.__src_des('me.sheimi.hadoop.seq.TarToSeqFile')
+    def convert(self):
+        self.__src_des('me.sheimi.magic.image.ImageConvertor')
 
     def hbase_test(self):
         cmd = self.cmd_tpl + ['me.sheimi.hbase.ClientTest']

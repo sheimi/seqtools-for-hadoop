@@ -9,7 +9,7 @@ import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 
-import me.sheimi.hadoop.seq.LocalSetup;
+import me.sheimi.hadoop.LocalSetup;
 
 public class SeqImageLoader extends ImageLoader {
   

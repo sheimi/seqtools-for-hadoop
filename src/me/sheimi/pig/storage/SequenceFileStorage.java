@@ -2,8 +2,6 @@ package me.sheimi.pig.storage;
 
 import java.io.IOException;
 
-import me.sheimi.hadoop.seq.LocalSetup;
-
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.Text;

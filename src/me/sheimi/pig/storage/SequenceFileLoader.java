@@ -3,8 +3,6 @@ package me.sheimi.pig.storage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import me.sheimi.hadoop.seq.LocalSetup;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.BytesWritable;

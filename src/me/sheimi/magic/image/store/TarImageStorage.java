@@ -7,7 +7,6 @@ import java.io.*;
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarOutputStream;
 
-import me.sheimi.hadoop.seq.LocalSetup;
 
 public class TarImageStorage implements ImageStorage {
 
