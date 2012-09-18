@@ -13,7 +13,6 @@ public class TarImageLoader extends ImageLoader {
 
   private TarInputStream input;
   private TarEntry next;
-  private boolean end = false;
   
   public TarImageLoader(TarInputStream input) {
     this.input = input;
@@ -44,9 +43,6 @@ public class TarImageLoader extends ImageLoader {
     this(new File(filename));
   }
 
-  public boolean hasNext() {
-    return !end;
-  }
   public Image next() {
     if (end)
       return null;
@@ -55,6 +51,9 @@ public class TarImageLoader extends ImageLoader {
       String filename = current.getName();
       int size = (int) current.getSize();
       Image image = new Image(input, size, filename);
+      System.out.println(image.getSize());
+      System.out.println(image.getFilename());
+      getNextEntry();
       return image;
     } catch (IOException e) {
       e.printStackTrace();

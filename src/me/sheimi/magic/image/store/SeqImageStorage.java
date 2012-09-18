@@ -13,8 +13,8 @@ import me.sheimi.hadoop.seq.LocalSetup;
 
 public class SeqImageStorage implements ImageStorage {
 
-  SequenceFile.Writer output;
-  LocalSetup setup;
+  private SequenceFile.Writer output;
+  private LocalSetup setup;
   {
     try {
       setup = new LocalSetup();  
