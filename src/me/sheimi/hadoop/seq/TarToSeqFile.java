@@ -34,6 +34,8 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 
+import me.sheimi.util.SeqImage;
+
 public class TarToSeqFile {
 	
   private File inputFile;
@@ -113,6 +115,7 @@ public class TarToSeqFile {
     
     //put the size of file ahead of the real content
     int length = (int)size;
+    /*
     byte[] bytes = new byte[length + LocalSetup.SIZE_LEN];
     byte[] size_byte = String.valueOf(length).getBytes();
     for (int i = 1; i <= LocalSetup.SIZE_LEN; i++) {
@@ -128,11 +131,9 @@ public class TarToSeqFile {
            (numRead = input.read(bytes, offset, bytes.length - offset)) >= 0) {
       offset += numRead;
     }
-
-    if (offset < bytes.length) {
-      throw new IOException("A file in the tar archive could not be completely read.");
-    }
-
+    */
+    SeqImage image = new SeqImage(input, length);
+    byte[] bytes = image.encode();
     return bytes;
   }
 
