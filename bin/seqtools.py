@@ -60,6 +60,10 @@ class SeqToolShell(object):
         cmd = self.cmd_tpl + ['me.sheimi.hbase.ClientTest']
         subprocess.call(cmd)
 
+    def hbase_image_schema(self):
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ImageSchema']
+        subprocess.call(cmd)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

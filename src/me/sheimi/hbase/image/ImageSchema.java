@@ -1,0 +1,60 @@
+package me.sheimi.hbase.image;
+
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.*;
+import java.io.IOException;
+
+
+public class ImageSchema {
+
+  static Configuration cfg = null;
+  static {
+    cfg = HBaseConfiguration.create();
+  }
+
+  public static final String TABLE_NAME = "image";
+
+  public static final byte[] FAMILY_META = Bytes.toBytes("meta");
+  public static final byte[] FAMILY_DATA = Bytes.toBytes("data"); 
+
+  public static final byte[] META_SIZE = Bytes.toBytes("size");
+  public static final byte[] META_HEIGHT = Bytes.toBytes("height");
+  public static final byte[] META_WIDTH = Bytes.toBytes("width");
+  public static final byte[] META_FORMAT = Bytes.toBytes("format");
+  public static final byte[] META_SOURCE = Bytes.toBytes("source");
+
+  public static final byte[] DATA_IMAGE = Bytes.toBytes("image");
+
+  public static void createTable() {
+    System.out.println("starting create table ...");
+    try {
+      HBaseAdmin hBaseAdmin = new HBaseAdmin(cfg);
+      if (hBaseAdmin.tableExists(TABLE_NAME)) {
+        System.out.printf("Table '%s' exists\n", TABLE_NAME);
+        hBaseAdmin.disableTable(TABLE_NAME);
+        hBaseAdmin.deleteTable(TABLE_NAME);
+        System.out.printf("deleting table '%s' ... \n", TABLE_NAME);
+      }
+      System.out.printf("creating table '%s' ... \n", TABLE_NAME);
+      HTableDescriptor tableDescriptor = new HTableDescriptor(TABLE_NAME);
+      tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_META));
+      tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_DATA));
+      hBaseAdmin.createTable(tableDescriptor);
+    } catch (MasterNotRunningException e) {  
+      e.printStackTrace();  
+    } catch (ZooKeeperConnectionException e) {  
+      e.printStackTrace();  
+    } catch (IOException e) {  
+      e.printStackTrace();  
+    }  
+    System.out.println("end create table ......"); 
+  }
+
+  public static void main(String [] args) {
+    createTable();
+  }
+
+}
