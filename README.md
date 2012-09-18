@@ -7,19 +7,17 @@ It is a sequence file tool for our project.
 
 Depencency
 ----------
-    ant.jar                       commons-lang-2.4.jar          hadoop-core-1.0.1.jar         pig-0.9.2.jar
-    commons-configuration-1.6.jar commons-logging-1.1.jar       log4j-1.2.14.jar
+    ant.jar                       commons-lang-2.4.jar          hadoop-core-1.0.3.jar         log4j-1.2.15.jar
+    protobuf-java-2.4.0a.jar      slf4j-log4j12-1.4.3.jar       commons-configuration-1.6.jar commons-logging-1.1.1.jar
+    hbase-0.94.1.jar              pig-0.10.0.jar                slf4j-api-1.4.3.jar           zookeeper-3.4.3.jar
 
 Examples
 --------
 
-### SeqToTar
-    
-    java -cp seqtools.jar me.sheimi.hadoop.seq.SeqFileToTar A B
+### Convert Image Storage Format
 
-### TarToSeq
-
-    java -cp seqtools.jar me.sheimi.hadoop.seq.TarToSeqFile A B
+    bin/seqtools.py -m convert -s A.tar B.seq
+    bin/seqtools.py -m convert -s A.seq B.tar
 
 ### Pig Latin
 
