@@ -36,7 +36,7 @@ public class SeqImage {
 
   public byte[] encode() {
     if (encoded == null) {
-      byte[] size = String.format(SIZE_FORMATER, image.length).getBytes();
+      byte[] size = encodeSize(image.length);
       encoded = new byte[SIZE_LEN + image.length];
       System.arraycopy(size, 0, encoded, 0, size.length);
       System.arraycopy(image, 0, encoded, size.length, image.length);
@@ -45,10 +45,19 @@ public class SeqImage {
   }
 
   public static SeqImage decode(byte[] src) {
-    byte[] len = Arrays.copyOfRange(src, 0, SIZE_LEN);
-    int size = Integer.parseInt(new String(len)); 
+    int size = decodeSize(src); 
     byte[] image = Arrays.copyOfRange(src, SIZE_LEN, SIZE_LEN + size);
     return new SeqImage(image);
+  }
+
+  public static byte[] encodeSize(int size) {
+    return String.format(SIZE_FORMATER, size).getBytes();
+  }
+
+  public static int decodeSize(byte[] src) {
+    byte[] len = Arrays.copyOfRange(src, 0, SIZE_LEN);
+    int size = Integer.parseInt(new String(len)); 
+    return size;
   }
 
 }

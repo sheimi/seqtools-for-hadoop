@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import me.sheimi.util.SeqImage;
+
 public class SeqFileToTar {
 
 	
@@ -53,11 +55,8 @@ public class SeqFileToTar {
         String[] fns = filename.split("/");
         entry = new TarEntry(fns[fns.length - 1]);
         byte[] data = value.get();
-        byte[] len = new byte[LocalSetup.SIZE_LEN];
-        for (int i = 0; i < LocalSetup.SIZE_LEN; i++) {
-          len[i] = data[i];
-        }
-        int size = Integer.parseInt(new String(len)); 
+
+        int size = SeqImage.decodeSize(data);
         System.out.println(size);
         entry.setSize(size);
         output.putNextEntry(entry);
