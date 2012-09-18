@@ -10,6 +10,7 @@ This file contains shell wrapper for seqtools.jar
 """
 
 from os import path
+import os
 import argparse
 import subprocess
 
@@ -19,9 +20,20 @@ class SeqToolShell(object):
     def __init__(self, args, parser):
         self.args = args
         self.parser = parser
+
+        home_dir = path.dirname(path.dirname(path.abspath(__file__)))
+        classpaths = [
+            '/bin/seqtools.jar', '/conf',
+        ]
+        classpaths.extend([
+            '/lib/' + jar
+            for jar in os.listdir(home_dir + '/lib')
+            if  jar.endswith(".jar")
+        ])
+        classpaths = [home_dir + cp for cp in classpaths]
         self.cmd_tpl = [
             'java', '-cp',
-            path.dirname(path.abspath(__file__)) + '/seqtools.jar',
+            ':'.join(classpaths),
         ]
 
     def __call__(self):
@@ -46,6 +58,10 @@ class SeqToolShell(object):
 
     def tar_to_seq(self):
         self.__src_des('me.sheimi.hadoop.seq.TarToSeqFile')
+
+    def hbase_test(self):
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.ClientTest']
+        subprocess.call(cmd)
 
 
 if __name__ == '__main__':

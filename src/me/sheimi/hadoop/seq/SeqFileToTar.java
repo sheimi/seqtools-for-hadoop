@@ -56,11 +56,15 @@ public class SeqFileToTar {
         entry = new TarEntry(fns[fns.length - 1]);
         byte[] data = value.get();
 
-        int size = SeqImage.decodeSize(data);
+        SeqImage image = SeqImage.decode(data);
+        int size = image.getSize();
+        byte[] raw = image.getImage();
+
         System.out.println(size);
         entry.setSize(size);
         output.putNextEntry(entry);
-        output.write(data, LocalSetup.SIZE_LEN, size);
+        //output.write(data, LocalSetup.SIZE_LEN, size);
+        output.write(raw);
         output.closeEntry();
       }
     } finally {
