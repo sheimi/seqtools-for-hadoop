@@ -1,3 +1,13 @@
+/*  ImageLoader.java
+ *
+ *  Load image from file
+ *
+ *  @author Reason Zhang
+ *  @email  sheimi.zhang@gmail.com
+ *  
+ *  CopyRight (c) 2012 Magic Team
+ *
+ */
 package me.sheimi.magic.image.load;
 
 import java.util.*;

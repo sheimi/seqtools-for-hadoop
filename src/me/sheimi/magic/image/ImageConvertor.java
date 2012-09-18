@@ -1,6 +1,14 @@
-/* Convert Image Formats
+/*  ImageConvertor.java
  *
- * Copyright (C) 2012 Reason Zhang
+ *  It can convert images from format A to format B:
+ *
+ *  such as from .tar to .seq or .seq to .tar
+ *
+ *  @author Reason Zhang
+ *  @email  sheimi.zhang@gmail.com
+ *  
+ *  CopyRight (c) 2012 Magic Team
+ *
  */
 
 package me.sheimi.magic.image;

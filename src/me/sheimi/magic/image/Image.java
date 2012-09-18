@@ -1,8 +1,18 @@
-/* Image.java - Encode and Decode Image which stored in
- * Seq file,
- * 10 bytes to store the size + image size
+/*  Image.java
  *
- * Copyright (C) 2012 Reason Zhang
+ *  It is the basic image raw container. And it can encode to and decode from
+ *  image raw stored in the hadoop sequence file.
+ *
+ *  Because the size of value in the sequence file is not the real size, so our
+ *  image format stored in the hadoop sequnce file is:
+ *
+ *  size of image (10 bytes) + image size
+ *
+ *  @author Reason Zhang
+ *  @email  sheimi.zhang@gmail.com
+ *  
+ *  CopyRight (c) 2012 Magic Team
+ *
  */
 
 package me.sheimi.magic.image;
