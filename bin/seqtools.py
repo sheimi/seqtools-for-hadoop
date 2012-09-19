@@ -56,13 +56,19 @@ class SeqToolShell(object):
     def convert(self):
         self.__src_des('me.sheimi.magic.image.ImageConvertor')
 
-    def hbase_test(self):
-        cmd = self.cmd_tpl + ['me.sheimi.hbase.ClientTest']
+    def meta_json(self):
+        param = self.args.p
+        cmd = self.cmd_tpl + ['me.sheimi.magic.image.meta.MetaLoader', param]
         subprocess.call(cmd)
 
     def hbase_image_schema(self):
-        param = self.args.p
+        param = self.args.p[0]
         cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ImageSchema', param]
+        subprocess.call(cmd)
+
+    def archive_image(self):
+        param = self.args.p
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ArchiveImage'] + param
         subprocess.call(cmd)
 
 
@@ -72,7 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('-m')
     parser.add_argument('-s')
     parser.add_argument('-d')
-    parser.add_argument('-p')
+    parser.add_argument('-p', nargs='+')
 
     args = parser.parse_args()
     SeqToolShell(args, parser)()

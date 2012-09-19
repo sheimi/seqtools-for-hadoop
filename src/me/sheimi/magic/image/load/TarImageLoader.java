@@ -51,8 +51,8 @@ public class TarImageLoader extends ImageLoader {
       String filename = current.getName();
       int size = (int) current.getSize();
       Image image = new Image(input, size, filename);
-      System.out.println(image.getSize());
-      System.out.println(image.getFilename());
+      //System.out.println(image.getSize());
+      //System.out.println(image.getFilename());
       getNextEntry();
       return image;
     } catch (IOException e) {

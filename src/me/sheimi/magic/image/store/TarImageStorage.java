@@ -29,7 +29,7 @@ public class TarImageStorage extends ImageStorage {
       TarEntry entry = new TarEntry(image.getFilename());
       int size = image.getSize();
       byte[] raw = image.getImage();
-      System.out.println(size);
+      //System.out.println(size);
       entry.setSize(size);
       output.putNextEntry(entry);
       output.write(raw);
