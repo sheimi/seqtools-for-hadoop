@@ -39,6 +39,11 @@ public class RetrieveImage {
     }
   }
 
+  public void initFilters(String[] args) {
+    for (String arg : args) {
+    }
+  }
+
   private void packImage(ResultScanner rs) {
     LOG.info("Begin Pack Images ... ");
     for (Result r : rs) {
@@ -55,6 +60,9 @@ public class RetrieveImage {
 
   public static void main(String [] args) {
     RetrieveImage ri = new RetrieveImage(ImageStorage.getStorage(args[0]));
+    if (args.length > 1) {
+      ri.initFilters(Arrays.copyOfRange(args, 1, args.length));
+    }
     ri.scanTable();
   }
 
