@@ -43,6 +43,8 @@ public class ArchiveImage {
                 Bytes.toBytes((String)value));
       }
     }
+    put.add(ImageSchema.FAMILY_META, ImageSchema.META_FILENAME,
+        Bytes.toBytes(image.getFilename()));
     put.add(ImageSchema.FAMILY_DATA, ImageSchema.DATA_IMAGE, image.getImage());
     return put;
   }

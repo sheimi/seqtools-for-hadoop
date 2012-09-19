@@ -20,6 +20,7 @@ public class ImageSchema {
   public static final byte[] FAMILY_META = Bytes.toBytes("meta");
   public static final byte[] FAMILY_DATA = Bytes.toBytes("data"); 
 
+  public static final byte[] META_FILENAME = Bytes.toBytes("filename");
   public static final byte[] META_SIZE = Bytes.toBytes("size");
   public static final byte[] META_HEIGHT = Bytes.toBytes("height");
   public static final byte[] META_WIDTH = Bytes.toBytes("width");
