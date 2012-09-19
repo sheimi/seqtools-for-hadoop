@@ -11,10 +11,26 @@
 package me.sheimi.magic.image.store;
 
 import java.util.*;
-import me.sheimi.magic.image.*;
 import java.io.*;
+import me.sheimi.util.*;
+import me.sheimi.magic.image.*;
 
-public interface ImageStorage {
-  public void write(Image image);
-  public void close();
+public abstract class ImageStorage {
+  public abstract  void write(Image image);
+  public abstract void close();
+
+  private static Map<String, Class<? extends ImageStorage>> storages;
+  static {
+    storages = new HashMap<String, Class<? extends ImageStorage>>();
+    storages.put("seq", SeqImageStorage.class);
+    storages.put("tar", TarImageStorage.class);
+  }
+  public static ImageStorage getStorage(String filename) {
+    String[] fns = filename.split("\\.");
+    String subfix = fns[fns.length - 1];
+    Class<? extends ImageStorage> storageClz = storages.get(subfix);
+    ImageStorage storage = ReflectionUtils.newInstance(storageClz, filename);
+    return storage;
+  }
+
 }

@@ -37,48 +37,10 @@ public class ImageConvertor {
     is.close();
   }
 
-  private static Map<String, Class<? extends ImageLoader>> loaderMap;
-  private static Map<String, Class<? extends ImageStorage>> storageMap;
-
-  static {
-    loaderMap = new HashMap<String, Class<? extends ImageLoader>>();
-    storageMap = new HashMap<String, Class<? extends ImageStorage>>();
-
-    loaderMap.put("seq", SeqImageLoader.class);
-    loaderMap.put("tar", TarImageLoader.class);
-
-    storageMap.put("seq", SeqImageStorage.class);
-    storageMap.put("tar", TarImageStorage.class);
-
-  }
-
   public static void main(String [] args) throws Exception {
-
-    String input = args[0];
-    String output = args[1];
-
-    String[] is = input.split("\\.");
-    String[] os = output.split("\\.");
-
-    Class<? extends ImageLoader> loaderClz = loaderMap.get(is[is.length - 1]);
-    Class<? extends ImageStorage> storageClz = storageMap.get(os[os.length - 1]);
-
-    ImageLoader loader = newInstance(loaderClz, input);
-    ImageStorage storage = newInstance(storageClz, output);
-
+    ImageLoader loader = ImageLoader.getLoader(args[0]);
+    ImageStorage storage = ImageStorage.getStorage(args[1]);
     new ImageConvertor(loader, storage).execute();
-
-  }
-
-  public static <T> T newInstance(Class<T> clazz, String param) {
-    T result;
-    try {
-      Constructor<T> meth = clazz.getDeclaredConstructor(String.class);
-      result = meth.newInstance(param);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-    return result;
   }
 
 }

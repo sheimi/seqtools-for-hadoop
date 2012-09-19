@@ -8,7 +8,7 @@ import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarOutputStream;
 
 
-public class TarImageStorage implements ImageStorage {
+public class TarImageStorage extends ImageStorage {
 
   private TarOutputStream output = null;
 

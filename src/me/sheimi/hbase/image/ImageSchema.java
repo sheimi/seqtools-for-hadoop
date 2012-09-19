@@ -7,16 +7,13 @@ import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.commons.logging.*;
 import java.io.IOException;
+import me.sheimi.hbase.*;
 
 
 public class ImageSchema {
 
   private static final Log LOG = LogFactory.getLog(ImageSchema.class);
-
-  static Configuration cfg = null;
-  static {
-    cfg = HBaseConfiguration.create();
-  }
+  private static Configuration cfg = HBaseConfig.cfg;
 
   public static final String TABLE_NAME = "image";
 
@@ -56,8 +53,17 @@ public class ImageSchema {
     LOG.info("end create table ......"); 
   }
 
+  public static byte[] genRowKey(String name) {
+    long time = System.currentTimeMillis();
+    return Bytes.toBytes(time + "_" + name);
+  }
+
   public static void main(String [] args) {
-    createTable();
+    if (args[0].equals("create_table")) {
+      createTable();
+    } else {
+      System.out.println(new String(genRowKey("hello")));
+    }
   }
 
 }

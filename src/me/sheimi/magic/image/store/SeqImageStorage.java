@@ -11,7 +11,7 @@ import org.apache.hadoop.io.Text;
 
 import me.sheimi.hadoop.LocalSetup;
 
-public class SeqImageStorage implements ImageStorage {
+public class SeqImageStorage extends ImageStorage {
 
   private SequenceFile.Writer output;
   private LocalSetup setup;

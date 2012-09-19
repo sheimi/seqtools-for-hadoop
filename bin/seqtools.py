@@ -61,7 +61,8 @@ class SeqToolShell(object):
         subprocess.call(cmd)
 
     def hbase_image_schema(self):
-        cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ImageSchema']
+        param = self.args.p
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ImageSchema', param]
         subprocess.call(cmd)
 
 
@@ -71,6 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('-m')
     parser.add_argument('-s')
     parser.add_argument('-d')
+    parser.add_argument('-p')
 
     args = parser.parse_args()
     SeqToolShell(args, parser)()
