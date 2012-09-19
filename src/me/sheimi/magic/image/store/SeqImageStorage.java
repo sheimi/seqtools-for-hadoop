@@ -4,6 +4,7 @@ import java.util.*;
 import me.sheimi.magic.image.*;
 import java.io.*;
 
+import org.apache.commons.logging.*;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
@@ -13,6 +14,7 @@ import me.sheimi.hadoop.LocalSetup;
 
 public class SeqImageStorage extends ImageStorage {
 
+  private static final Log LOG = LogFactory.getLog(SeqImageStorage.class);
   private SequenceFile.Writer output;
   private LocalSetup setup;
   {

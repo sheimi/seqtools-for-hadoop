@@ -4,12 +4,14 @@ import java.util.*;
 import me.sheimi.magic.image.*;
 import java.io.*;
 
+import org.apache.commons.logging.*;
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarOutputStream;
 
 
 public class TarImageStorage extends ImageStorage {
 
+  private static final Log LOG = LogFactory.getLog(TarImageStorage.class);
   private TarOutputStream output = null;
 
   public TarImageStorage(TarOutputStream output) {

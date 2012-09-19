@@ -75,6 +75,11 @@ class SeqToolShell(object):
         cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ArchiveImage'] + param
         subprocess.call(cmd)
 
+    def retrieve_image(self):
+        param = self.args.p
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.image.RetrieveImage'] + param
+        subprocess.call(cmd)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

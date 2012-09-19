@@ -15,7 +15,7 @@ import java.io.*;
 import me.sheimi.util.*;
 import me.sheimi.magic.image.*;
 
-public abstract class ImageStorage {
+public abstract class ImageStorage implements Closeable {
   public abstract  void write(Image image);
   public abstract void close();
 
