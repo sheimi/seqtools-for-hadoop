@@ -12,6 +12,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.filter.*;
+import me.sheimi.hbase.filter.*;
 import java.io.IOException;
 
 public class ClientTest {
@@ -21,11 +22,12 @@ public class ClientTest {
   }
   public static void main(String [] args) throws IOException {
     
+    System.out.println("test");
     SingleColumnValueFilter filter1 = new SingleColumnValueFilter(
       Bytes.toBytes("meta"),
-      Bytes.toBytes("size"),
+      Bytes.toBytes("width"),
       CompareFilter.CompareOp.EQUAL,
-      Bytes.toBytes("100*100")
+      new IntegerComparator(100)
     );
 
     HTable table = new HTable(cfg, "image");
@@ -33,8 +35,8 @@ public class ClientTest {
     s.setFilter(filter1);
     ResultScanner ss = table.getScanner(s);
     for(Result r:ss){
-      System.out.println(new String(r.getValue(Bytes.toBytes("data"),
-              Bytes.toBytes("data"))));
+      System.out.println(new String(r.getValue(Bytes.toBytes("meta"),
+              Bytes.toBytes("height"))));
     }
   }
 }

@@ -34,8 +34,14 @@ public class ArchiveImage {
     Map<String, Object> meta = metaLoader.get(image.getFilename());
     Put put = new Put(ImageSchema.genRowKey(image.getFilename()));
     for (Map.Entry<String, Object> entry: meta.entrySet()) {
-      put.add(ImageSchema.FAMILY_META, Bytes.toBytes(entry.getKey()),
-              Bytes.toBytes((String)entry.getValue()));
+      Object value = entry.getValue();
+      if (value instanceof Integer) {
+        put.add(ImageSchema.FAMILY_META, Bytes.toBytes(entry.getKey()),
+                Bytes.toBytes((Integer)value));
+      } else {
+        put.add(ImageSchema.FAMILY_META, Bytes.toBytes(entry.getKey()),
+                Bytes.toBytes((String)value));
+      }
     }
     put.add(ImageSchema.FAMILY_DATA, ImageSchema.DATA_IMAGE, image.getImage());
     return put;

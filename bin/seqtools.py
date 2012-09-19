@@ -61,6 +61,10 @@ class SeqToolShell(object):
         cmd = self.cmd_tpl + ['me.sheimi.magic.image.meta.MetaLoader', param]
         subprocess.call(cmd)
 
+    def hbase_client(self):
+        cmd = self.cmd_tpl + ['me.sheimi.hbase.ClientTest']
+        subprocess.call(cmd)
+
     def hbase_image_schema(self):
         param = self.args.p[0]
         cmd = self.cmd_tpl + ['me.sheimi.hbase.image.ImageSchema', param]
