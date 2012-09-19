@@ -30,8 +30,9 @@ public class ImageSchema {
 
   public static void createTable() {
     LOG.info("starting create table ...");
+    HBaseAdmin hBaseAdmin;
     try {
-      HBaseAdmin hBaseAdmin = new HBaseAdmin(cfg);
+      hBaseAdmin = new HBaseAdmin(cfg);
       if (hBaseAdmin.tableExists(TABLE_NAME)) {
         LOG.info(String.format("Table '%s' exists", TABLE_NAME));
         hBaseAdmin.disableTable(TABLE_NAME);
@@ -43,13 +44,14 @@ public class ImageSchema {
       tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_META));
       tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_DATA));
       hBaseAdmin.createTable(tableDescriptor);
+      hBaseAdmin.close();
     } catch (MasterNotRunningException e) {  
       e.printStackTrace();  
     } catch (ZooKeeperConnectionException e) {  
       e.printStackTrace();  
     } catch (IOException e) {  
       e.printStackTrace();  
-    }  
+    }
     LOG.info("end create table ......"); 
   }
 

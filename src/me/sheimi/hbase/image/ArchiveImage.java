@@ -64,6 +64,12 @@ public class ArchiveImage {
       e.printStackTrace();
     }
     LOG.info("inserted ...  ");
+    try {
+      table.close();
+      pool.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void main(String [] args) {

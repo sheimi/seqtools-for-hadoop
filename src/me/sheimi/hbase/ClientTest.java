@@ -22,12 +22,11 @@ public class ClientTest {
   }
   public static void main(String [] args) throws IOException {
     
-    System.out.println("test");
     SingleColumnValueFilter filter1 = new SingleColumnValueFilter(
       Bytes.toBytes("meta"),
       Bytes.toBytes("width"),
-      CompareFilter.CompareOp.EQUAL,
-      new IntegerComparator(100)
+      CompareFilter.CompareOp.GREATER_OR_EQUAL,
+      new IntegerComparator(300)
     );
 
     HTable table = new HTable(cfg, "image");
@@ -35,8 +34,13 @@ public class ClientTest {
     s.setFilter(filter1);
     ResultScanner ss = table.getScanner(s);
     for(Result r:ss){
-      System.out.println(new String(r.getValue(Bytes.toBytes("meta"),
-              Bytes.toBytes("height"))));
+      System.out.println(Bytes.toInt(r.getValue(Bytes.toBytes("meta"),
+              Bytes.toBytes("width"))));
+    }
+    try {
+      table.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }
