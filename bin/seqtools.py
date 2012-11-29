@@ -3,6 +3,26 @@
 seqtools.py
 ~~~~~~~
 This file contains shell wrapper for seqtools.jar
+    parser.add_argument('-m')
+    parser.add_argument('-s')
+    parser.add_argument('-d')
+    parser.add_argument('-p', nargs='+')
+
+seqtools.py [-m method] [-s source] [-d destination] [-p p1 [p2 ...]]
+
+methods:
+
+  archive_image:
+    archive the images (store them in HBase)
+    seqtools.py -m archive_image -p [images] [meta_file]
+
+  convert:
+    convert the image format from seq to tar or tar to seq
+    seqtools.py -m convert -s source -d destination
+ 
+
+  retrieve_image [not finished]:
+
 
 :copyright: (c) 2012 by sheimi.
 :license: BSD, see LISENSE for more details.
