@@ -19,7 +19,6 @@ methods:
   convert:
     convert the image format from seq to tar or tar to seq
     seqtools.py -m convert -s source -d destination
- 
 
   retrieve_image [not finished]:
 

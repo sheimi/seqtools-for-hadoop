@@ -3,6 +3,7 @@ package me.sheimi.pig.eval;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.hadoop.io.Text;
@@ -15,9 +16,13 @@ import org.apache.pig.data.TupleFactory;
 public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 
   static {
+    System.out.println(System.getProperty("java.library.path"));
     String lib = "cvjni";
+    //String lib = "/tmp/sheimi-java-lib/libcvjni.jnilib";
     System.out.println("loading native lib" + lib);
+    //File f = new File(lib);
     try {
+      //System.load(f.getAbsolutePath());
       System.loadLibrary(lib);
     } catch (Exception e) {
       e.printStackTrace();
