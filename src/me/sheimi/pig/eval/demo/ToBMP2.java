@@ -1,21 +1,16 @@
 package me.sheimi.pig.eval.demo;
 
-import me.sheimi.pig.eval.*;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import org.apache.hadoop.io.Text;
-import org.apache.pig.EvalFunc;
+import me.sheimi.pig.eval.BytesInputEvalFunc;
+
 import org.apache.pig.backend.executionengine.ExecException;
 import org.apache.pig.data.DataByteArray;
-import org.apache.pig.data.Tuple;
-import org.apache.pig.data.TupleFactory;
 
 public class ToBMP2 extends BytesInputEvalFunc<DataByteArray> {
 	

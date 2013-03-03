@@ -1,16 +1,11 @@
 package me.sheimi.pig.eval;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.apache.hadoop.io.Text;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.backend.executionengine.ExecException;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.Tuple;
-import org.apache.pig.data.TupleFactory;
 
 public abstract class BytesInputEvalFunc<T> extends EvalFunc<T> {
 	

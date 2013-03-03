@@ -20,49 +20,57 @@ package me.sheimi.hadoop;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 
-/** Provides Hadoop configuration and local file system objects for
- * other classes.  This is for situations where you want to use some
- * part of the Hadoop code outside of the Hadoop Map/Reduce
- * framework.
- *
+/**
+ * Provides Hadoop configuration and local file system objects for other
+ * classes. This is for situations where you want to use some part of the Hadoop
+ * code outside of the Hadoop Map/Reduce framework.
+ * 
  * @author Stuart Sierra (mail@stuartsierra.com)
  */
 public class LocalSetup {
 
 	public static final int SIZE_LEN = 10;
 
-    private FileSystem fileSystem;
-    private Configuration config;
+	private FileSystem fileSystem;
+	private Configuration config;
 
-    /** Sets up Configuration and LocalFileSystem instances for
-     * Hadoop.  Throws Exception if they fail.  Does not load any
-     * Hadoop XML configuration files, just sets the minimum
-     * configuration necessary to use the local file system.
-     */
-    public LocalSetup() throws Exception {
-        config = new Configuration();
+	/**
+	 * Sets up Configuration and LocalFileSystem instances for Hadoop. Throws
+	 * Exception if they fail. Does not load any Hadoop XML configuration files,
+	 * just sets the minimum configuration necessary to use the local file
+	 * system.
+	 */
+	public LocalSetup() throws Exception {
+		config = new Configuration();
 
-        /* Normally set in hadoop-default.xml, without it you get
-         * "java.io.IOException: No FileSystem for scheme: file" */
-        config.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
+		/*
+		 * Normally set in hadoop-default.xml, without it you get
+		 * "java.io.IOException: No FileSystem for scheme: file"
+		 */
+		config.set("fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem");
 
-        fileSystem = FileSystem.get(config);
-        if (fileSystem.getConf() == null) {
-            /* This happens if the FileSystem is not properly
-             * initialized, causes NullPointerException later. */
-            throw new Exception("LocalFileSystem configuration is null");
-        }
-    }
+		fileSystem = FileSystem.get(config);
+		if (fileSystem.getConf() == null) {
+			/*
+			 * This happens if the FileSystem is not properly initialized,
+			 * causes NullPointerException later.
+			 */
+			throw new Exception("LocalFileSystem configuration is null");
+		}
+	}
 
-    /** Returns a Hadoop Configuration instance for use in Hadoop API
-     * calls. */
-    public Configuration getConf() {
-        return config;
-    }
+	/**
+	 * Returns a Hadoop Configuration instance for use in Hadoop API calls.
+	 */
+	public Configuration getConf() {
+		return config;
+	}
 
-    /** Returns a Hadoop FileSystem instance that provides access to
-     * the local filesystem. */
-    public FileSystem getLocalFileSystem() {
-        return fileSystem;
-    }
+	/**
+	 * Returns a Hadoop FileSystem instance that provides access to the local
+	 * filesystem.
+	 */
+	public FileSystem getLocalFileSystem() {
+		return fileSystem;
+	}
 }

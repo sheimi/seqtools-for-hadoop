@@ -3,6 +3,8 @@ package me.sheimi.pig.storage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import me.sheimi.magic.image.Image;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.BytesWritable;
@@ -20,8 +22,6 @@ import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.DataType;
 import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
-
-import me.sheimi.magic.image.*;
 
 /**
  * A Loader for My Specific SequenceFiles. Key is Text (the filename) Value is
@@ -53,7 +53,7 @@ public class SequenceFileLoader extends FileInputLoadFunc {
 
 	protected Object translateBytesWritable(BytesWritable w) {
 		byte[] data = w.getBytes();
-    Image image = Image.decode(data, null);
+		Image image = Image.decode(data, null);
 		return new DataByteArray(image.getImage());
 	}
 

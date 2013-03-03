@@ -10,10 +10,12 @@
  */
 package me.sheimi.magic.image.store;
 
-import java.util.*;
-import java.io.*;
-import me.sheimi.util.*;
-import me.sheimi.magic.image.*;
+import java.io.Closeable;
+import java.util.HashMap;
+import java.util.Map;
+
+import me.sheimi.magic.image.Image;
+import me.sheimi.util.ReflectionUtils;
 
 public abstract class ImageStorage implements Closeable {
   public abstract  void write(Image image);

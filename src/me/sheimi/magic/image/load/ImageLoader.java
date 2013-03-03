@@ -10,33 +10,40 @@
  */
 package me.sheimi.magic.image.load;
 
-import java.util.*;
-import java.io.*;
-import me.sheimi.util.*;
-import me.sheimi.magic.image.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import me.sheimi.magic.image.Image;
+import me.sheimi.util.ReflectionUtils;
 
 public abstract class ImageLoader implements Iterator<Image> {
-  protected boolean end = false;
-  public abstract Image next();
-  public abstract void close();
-  public boolean hasNext() {
-    return !end;
-  }
-  public void remove() {
-  }
+	protected boolean end = false;
 
-  private static Map<String, Class<? extends ImageLoader>> loaders;
-  static {
-    loaders = new HashMap<String, Class<? extends ImageLoader>>();
-    loaders.put("seq", SeqImageLoader.class);
-    loaders.put("tar", TarImageLoader.class);
-  }
-  public static ImageLoader getLoader(String filename) {
-    String[] fns = filename.split("\\.");
-    String subfix = fns[fns.length - 1];
-    Class<? extends ImageLoader> loaderClz = loaders.get(subfix);
-    ImageLoader loader = ReflectionUtils.newInstance(loaderClz, filename);
-    return loader;
-  }
+	public abstract Image next();
+
+	public abstract void close();
+
+	public boolean hasNext() {
+		return !end;
+	}
+
+	public void remove() {
+	}
+
+	private static Map<String, Class<? extends ImageLoader>> loaders;
+	static {
+		loaders = new HashMap<String, Class<? extends ImageLoader>>();
+		loaders.put("seq", SeqImageLoader.class);
+		loaders.put("tar", TarImageLoader.class);
+	}
+
+	public static ImageLoader getLoader(String filename) {
+		String[] fns = filename.split("\\.");
+		String subfix = fns[fns.length - 1];
+		Class<? extends ImageLoader> loaderClz = loaders.get(subfix);
+		ImageLoader loader = ReflectionUtils.newInstance(loaderClz, filename);
+		return loader;
+	}
 
 }

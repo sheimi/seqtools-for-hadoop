@@ -1,16 +1,17 @@
 package me.sheimi.magic.image.store;
 
-import java.util.*;
-import me.sheimi.magic.image.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.apache.commons.logging.*;
+import me.sheimi.hadoop.LocalSetup;
+import me.sheimi.magic.image.Image;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
-
-import me.sheimi.hadoop.LocalSetup;
 
 public class SeqImageStorage extends ImageStorage {
 

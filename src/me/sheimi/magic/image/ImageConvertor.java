@@ -13,34 +13,33 @@
 
 package me.sheimi.magic.image;
 
-import me.sheimi.magic.image.load.*;
-import me.sheimi.magic.image.store.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.Constructor;
+import java.io.IOException;
+
+import me.sheimi.magic.image.load.ImageLoader;
+import me.sheimi.magic.image.store.ImageStorage;
 
 public class ImageConvertor {
 
-  private ImageLoader il;
-  private ImageStorage is;
+	private ImageLoader il;
+	private ImageStorage is;
 
-  public ImageConvertor(ImageLoader il, ImageStorage is) {
-    this.il = il;
-    this.is = is;
-  }
+	public ImageConvertor(ImageLoader il, ImageStorage is) {
+		this.il = il;
+		this.is = is;
+	}
 
-  public void execute() throws IOException{
-    while (il.hasNext()) {
-      is.write(il.next());
-    }
-    il.close();
-    is.close();
-  }
+	public void execute() throws IOException {
+		while (il.hasNext()) {
+			is.write(il.next());
+		}
+		il.close();
+		is.close();
+	}
 
-  public static void main(String [] args) throws Exception {
-    ImageLoader loader = ImageLoader.getLoader(args[0]);
-    ImageStorage storage = ImageStorage.getStorage(args[1]);
-    new ImageConvertor(loader, storage).execute();
-  }
+	public static void main(String[] args) throws Exception {
+		ImageLoader loader = ImageLoader.getLoader(args[0]);
+		ImageStorage storage = ImageStorage.getStorage(args[1]);
+		new ImageConvertor(loader, storage).execute();
+	}
 
 }
