@@ -39,7 +39,7 @@ JNIEXPORT jbyteArray JNICALL Java_me_sheimi_pig_eval_BytesNativeEvalFunc_invokeN
   cvcv_t cvcv = (cvcv_t) dlsym(handle, funcname_native);
   const char *dlsym_error = dlerror();
   if (dlsym_error) {
-      cerr << "Cannot load symbol 'hello': " << dlsym_error <<
+      cerr << "Cannot load symbol" << funcname_native << ": " << dlsym_error <<
       '\n';
     dlclose(handle);
     return jba;
