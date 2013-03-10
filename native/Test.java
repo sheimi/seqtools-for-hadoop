@@ -12,10 +12,11 @@ public class Test {
     }   
   }
 
-  public static native byte[] invokeNative(byte[] imageSource);
+  public static native byte[] invokeNative(String dlpath, String funcname,
+            byte[] imageSource);
 
   public static void main(String [] args) {
-    invokeNative(null);
+    invokeNative(null, null, null);
   }
 
 }
