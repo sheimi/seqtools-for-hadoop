@@ -19,23 +19,19 @@ JNIEXPORT jbyteArray JNICALL Java_me_sheimi_pig_eval_BytesNativeEvalFunc_invokeN
   jbyte* jbae = env->GetByteArrayElements(jba, isCopy);
   jsize len = env->GetArrayLength(jba);
   char * imageSource = (char *)jbae;
-  vector<char> imageSourceV;
-  for (int i = 0; i < len; i++) {
-    imageSourceV.push_back(imageSource[i]);
-  }
+  vector<unsigned char> imageSourceV;
+  imageSourceV.resize(len);
+  copy(imageSource, imageSource + len, imageSourceV.begin());
   // convert image binary to Mat
   Mat image = imdecode(imageSourceV, CV_LOAD_IMAGE_COLOR);
 
-  // operate the Mat
-  vector<unsigned char> imageDesV;
-  imencode(".bmp", image, imageDesV); // encode the Mat to bmp
-
-  // store result to a new jbyteArray
-  jbyte* result_e = new jbyte[imageDesV.size()];
-  for (int i = 0; i < imageDesV.size(); i++) {
-    result_e[i] = (jbyte)imageDesV[i];
-  }
-  jbyteArray result = env->NewByteArray(imageDesV.size());
-  env->SetByteArrayRegion(result, 0, imageDesV.size(), result_e);
+  imageSourceV.clear();
+  imencode(".bmp", image, imageSourceV); // encode the Mat to bmp
+  cout << imageSourceV.size() << endl;
+  int size = imageSourceV.size();
+  jbyte* result_e = reinterpret_cast<jbyte*>(&imageSourceV[0]);
+  jbyteArray result = env->NewByteArray(imageSourceV.size());
+  env->SetByteArrayRegion(result, 0, imageSourceV.size(), result_e);
+  env->ReleaseByteArrayElements(jba, jbae, 0);
   return result;
 }
