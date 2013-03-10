@@ -31,6 +31,7 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 			return null;
 
 		byte[] bytesin;
+		
 		try {
 			// get the input byte array
 			bytesin = ((DataByteArray) input.get(0)).get();

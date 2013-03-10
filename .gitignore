@@ -6,3 +6,4 @@ lib
 *.jar
 *.log
 test
+.DS_Store
