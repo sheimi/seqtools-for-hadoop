@@ -31,13 +31,17 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 			return null;
 
 		byte[] bytesin;
+		String handlePath;
+		String funcName;
 
 		try {
 			// get the input byte array
 			bytesin = ((DataByteArray) input.get(0)).get();
+			handlePath = (String)input.get(1);
+			funcName = (String)input.get(2);
 			// invoke native lib
 			System.out.println("invoking start");
-			byte[] byteout = invokeNative("/tmp/cvcv.so", "cvcv", bytesin);
+			byte[] byteout = invokeNative(handlePath, funcName, bytesin);
 			System.out.println("invoking end");
 			// set output
 			DataByteArray dba = new DataByteArray(byteout);
