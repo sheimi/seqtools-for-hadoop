@@ -24,3 +24,4 @@ mac: clean
 clean:
 	rm -rf *.so
 	rm -rf *.jnilib
+	rm -rf *.o
