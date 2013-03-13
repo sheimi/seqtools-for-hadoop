@@ -10,7 +10,7 @@
 
 CC=g++
 SEARCH_LIB=-lopencv_core -lopencv_highgui
-INCLUDE=-I/usr/local/include -I$(JAVA_INCLUDE)
+INCLUDE=-I/usr/local/include -I$(JAVA_INCLUDE) -I./include
 LIBRARY=-L/usr/local/lib
 FLAGS= -m64 -dynamiclib -fPIC
 FLAGS2= -m64 -shared -fPIC
