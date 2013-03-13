@@ -8,3 +8,6 @@ lib
 test
 .DS_Store
 bin
+*.so
+*.o
+*.jnilib
