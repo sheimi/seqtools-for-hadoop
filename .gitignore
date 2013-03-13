@@ -7,3 +7,4 @@ lib
 *.log
 test
 .DS_Store
+bin
