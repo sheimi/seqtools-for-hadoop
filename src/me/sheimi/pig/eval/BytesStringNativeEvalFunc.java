@@ -5,7 +5,7 @@ import org.apache.pig.backend.executionengine.ExecException;
 import org.apache.pig.data.DataByteArray;
 import org.apache.pig.data.Tuple;
 
-public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
+public class BytesStringNativeEvalFunc extends EvalFunc<String> {
 
 	static {
 		System.out.println(System.getProperty("java.library.path"));
@@ -19,7 +19,7 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 	}
 
 	@Override
-	public DataByteArray exec(Tuple input) {
+	public String exec(Tuple input) {
 
 		// check if input is valid
 		if (input == null || input.size() == 0)
@@ -36,11 +36,9 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 			funcName = (String) input.get(2);
 			// invoke native lib
 			System.out.println("invoking start");
-			byte[] byteout = invokeNative(handlerPath, funcName, bytesin);
+			String out = invokeNative(handlerPath, funcName, bytesin);
 			System.out.println("invoking end");
-			// set output
-			DataByteArray dba = new DataByteArray(byteout);
-			return dba;
+			return out;
 		} catch (ExecException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -49,7 +47,7 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 		return null;
 	}
 
-	public static native byte[] invokeNative(String dlpath, String funcname,
+	public static native String invokeNative(String dlpath, String funcname,
 			byte[] imageSource);
 
 }
