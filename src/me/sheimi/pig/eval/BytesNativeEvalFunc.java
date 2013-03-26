@@ -9,7 +9,7 @@ public class BytesNativeEvalFunc extends EvalFunc<DataByteArray> {
 
 	static {
 		System.out.println(System.getProperty("java.library.path"));
-		String lib = "cvjni";
+		String lib = "cvjni_byte_byte";
 		System.out.println("loading native lib" + lib);
 		try {
 			System.loadLibrary(lib);

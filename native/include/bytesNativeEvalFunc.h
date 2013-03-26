@@ -11,9 +11,8 @@ extern "C" {
  * Class:     Test
  * Method:    invokeNative
  * Signature: (Ljava/lang/String;Ljava/lang/String;[B)[B
- */
-JNIEXPORT jbyteArray JNICALL Java_me_sheimi_pig_eval_BytesNativeEvalFunc_invokeNative(
-		JNIEnv *, jclass, jstring, jstring, jbyteArray);
+ */JNIEXPORT jbyteArray JNICALL Java_me_sheimi_pig_eval_BytesNativeEvalFunc_invokeNative(
+        JNIEnv *, jclass, jstring, jstring, jbyteArray);
 
 #ifdef __cplusplus
 }

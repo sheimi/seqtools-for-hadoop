@@ -1,4 +1,4 @@
-#include "bytesNativeEvalFunc.h"
+#include "bytesStringNativeEvalFunc.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -16,59 +16,57 @@ typedef void (*cv_byte_str_proxy_t)(vector<unsigned char>* in, string* out);
  */
 
 JNIEXPORT jstring JNICALL Java_me_sheimi_pig_eval_BytesStringNativeEvalFunc_invokeNative(
-		JNIEnv *env, jclass jc, jstring dlpath, jstring handler_name,
-		jbyteArray jba) {
-	cout << "This is in JNI" << endl;
-	// help variable to convert jvm type to local type
-	jboolean isCopy;
+        JNIEnv *env, jclass jc, jstring dlpath, jstring handler_name,
+        jbyteArray jba) {
 
-	// get the multimedia source (byte array)
-	jbyte *media_src_raw = env->GetByteArrayElements(jba, &isCopy);
-	// the lenth of multimedia byte array
-	jsize len_of_media_src = env->GetArrayLength(jba);
+    cout << "This is in JNI" << endl;
+    // help variable to convert jvm type to local type
+    jboolean is_copy;
 
-	vector<unsigned char> media_src_input;
-	media_src_input.resize(len_of_media_src);
-	copy((char *) media_src_raw, (char *) media_src_raw + len_of_media_src,
-			media_src_input.begin());
-	if (isCopy == JNI_TRUE) {
-		env->ReleaseByteArrayElements(jba, media_src_raw, 0);
-	}
+    // get the multimedia source (byte array)
+    jbyte *media_src_raw = env->GetByteArrayElements(jba, &is_copy);
+    // the lenth of multimedia byte array
+    jsize len_of_media_src = env->GetArrayLength(jba);
 
-	// load the native dynamic library path
-	const char *dlpath_native = env->GetStringUTFChars(dlpath, &isCopy);
-	void *dllib = dlopen(dlpath_native, RTLD_LAZY);
-	if (isCopy == JNI_TRUE) {
-		env->ReleaseStringUTFChars(dlpath, dlpath_native);
-	}
+    vector<unsigned char> media_src_input;
+    media_src_input.resize(len_of_media_src);
+    copy((char *) media_src_raw, (char *) media_src_raw + len_of_media_src,
+            media_src_input.begin());
+    if (is_copy == JNI_TRUE) {
+        env->ReleaseByteArrayElements(jba, media_src_raw, 0);
+    }
 
-	cout << "handle loaded" << endl;
+    // load the native dynamic library path
+    const char *dlpath_native = env->GetStringUTFChars(dlpath, &is_copy);
+    void *dllib = dlopen(dlpath_native, RTLD_LAZY);
+    if (is_copy == JNI_TRUE) {
+        env->ReleaseStringUTFChars(dlpath, dlpath_native);
+    }
 
-	// get the native handler from dl library
-	const char *handler_name_native = env->GetStringUTFChars(handler_name,
-			&isCopy);
-	dlerror();
-	cv_byte_str_proxy_t cv_proxy = (cv_byte_str_proxy_t) dlsym(dllib,
-			handler_name_native);
-	const char *dlsym_error = dlerror();
-	if (dlsym_error) {
-		cerr << "Cannot load symbol" << handler_name_native << ": "
-				<< dlsym_error << endl;
-		dlclose(dllib);
-		return NULL;
-	}
-	if (isCopy == JNI_TRUE) {
-		env->ReleaseStringUTFChars(handler_name, handler_name_native);
-	}
-	cout << "function loaded" << endl;
+    cout << "handle loaded" << endl;
 
-	string output;
-	cv_proxy(&media_src_input, &output);
-	dlclose(dllib);
+    // get the native handler from dl library
+    const char *handler_name_native = env->GetStringUTFChars(handler_name,
+            &is_copy);
+    dlerror();
+    cv_byte_str_proxy_t cv_proxy = (cv_byte_str_proxy_t) dlsym(dllib,
+            handler_name_native);
+    const char *dlsym_error = dlerror();
+    if (dlsym_error) {
+        cerr << "Cannot load symbol" << handler_name_native << ": "
+                << dlsym_error << endl;
+        dlclose(dllib);
+        return NULL;
+    }
+    if (is_copy == JNI_TRUE) {
+        env->ReleaseStringUTFChars(handler_name, handler_name_native);
+    }
+    cout << "function loaded" << endl;
 
-	const jchar *output_cstr = (const jchar *)output.c_str();
-	jsize output_len = output.size();
+    string output;
+    cv_proxy(&media_src_input, &output);
+    dlclose(dllib);
 
-	jstring result = env->NewString(output_cstr, output_len);
-	return result;
+    jstring result = env->NewStringUTF(output.c_str());
+    return result;
 }

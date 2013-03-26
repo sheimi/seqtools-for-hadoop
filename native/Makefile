@@ -9,7 +9,8 @@
 	#$(CC) $(FLAGS) cvjni.cpp $(SEARCH_LIB) -o libcvjni.so $(INCLUDE) 
 
 CC=g++
-SEARCH_LIB=-lopencv_core -lopencv_highgui
+SEARCH_LIB=-lopencv_core -lopencv_highgui -lopencv_features2d -lopencv_contrib\
+					 -lopencv_calib3d -lopencv_flann -lopencv_gpu -lopencv_imgproc
 INCLUDE=-I/usr/local/include -I$(JAVA_INCLUDE) -I./include
 LIBRARY=-L/usr/local/lib
 FLAGS= -m64 -dynamiclib -fPIC
@@ -17,7 +18,7 @@ FLAGS2= -m64 -shared -fPIC
 OUT=libcvjni.jnilib
 SRC=cvjni.cpp
 
-mac: clean cvjni_byte_string cvjni_byte_byte 
+mac: clean cvjni_byte_string cvjni_byte_byte test_cv
 
 cvjni_byte_string:
 	$(CC) -m64 -c -fPIC src/cvjni_byte_string.cpp -o src/cvjni_byte_string.o $(INCLUDE)
@@ -27,7 +28,11 @@ cvjni_byte_byte:
 	$(CC) -m64 -c -fPIC src/cvjni_byte_byte.cpp -o src/cvjni_byte_byte.o $(INCLUDE)
 	$(CC) -dynamiclib src/cvjni_byte_byte.o -o src/libcvjni_byte_byte.jnilib
 
-#$(CC) $(FLAGS2) cvcv.cpp -o cvcv.so $(SEARCH_LIB) $(INCLUDE)
+test_cv:
+	$(CC) -m64 -c -fPIC test_code/cvcv.cpp -o test_code/cvcv.o $(INCLUDE)
+	$(CC) -shared test_code/cvcv.o -o test_code/cvcv.so -L/usr/local/lib $(SEARCH_LIB)
+	$(CC) -m64 -c -fPIC test_code/cv_histogram.cpp -o test_code/cv_histogram.o $(INCLUDE)
+	$(CC) -shared test_code/cv_histogram.o -o test_code/cv_histogram.so -L/usr/local/lib $(SEARCH_LIB)
 
 clean:
 	rm -rf **/*.so
