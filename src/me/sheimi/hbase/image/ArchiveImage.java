@@ -34,9 +34,10 @@ public class ArchiveImage {
 	public Put genPut(Image image) {
 		LOG.info("generating hbase entry for image: " + image.getFilename());
 
-		Map<String, Object> meta = metaLoader.get(image.getFilename());
 		Put put = new Put(ImageSchema.genRowKey(image.getFilename()));
-		for (Map.Entry<String, Object> entry : meta.entrySet()) {
+
+		Map<String, Object> metas = metaLoader.getMetas(image.getFilename());
+		for (Map.Entry<String, Object> entry : metas.entrySet()) {
 			Object value = entry.getValue();
 			if (value instanceof Integer) {
 				put.add(ImageSchema.FAMILY_META, Bytes.toBytes(entry.getKey()),
@@ -46,6 +47,13 @@ public class ArchiveImage {
 						Bytes.toBytes((String) value));
 			}
 		}
+
+		List<String> tags = metaLoader.getTags(image.getFilename());
+		for (String tag : tags) {
+			put.add(ImageSchema.FAMILY_TAG, Bytes.toBytes(tag),
+					Bytes.toBytes(1));
+		}
+
 		put.add(ImageSchema.FAMILY_META, ImageSchema.META_FILENAME,
 				Bytes.toBytes(image.getFilename()));
 		put.add(ImageSchema.FAMILY_DATA, ImageSchema.DATA_IMAGE,

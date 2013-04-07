@@ -1,15 +1,16 @@
 package me.sheimi.magic.image.meta;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.sheimi.util.ReflectionUtils;
 
 public abstract class MetaLoader {
 
-	public abstract String get(String key, String metaKey);
-
-	public abstract Map<String, Object> get(String key);
+	public abstract Map<String, Object> getMetas(String fileName);
+	
+	public abstract List<String> getTags(String fileName);
 
 	private static Map<String, Class<? extends MetaLoader>> loaders;
 	static {
@@ -27,8 +28,8 @@ public abstract class MetaLoader {
 
 	public static void main(String[] args) {
 		MetaLoader loader = MetaLoader.getLoader(args[0]);
-		Map<String, Object> meta = loader.get("hello");
-		for (Map.Entry<String, Object> entry : meta.entrySet()) {
+		Map<String, Object> metas = loader.getMetas("hello");
+		for (Map.Entry<String, Object> entry : metas.entrySet()) {
 			System.out.println(entry.getKey());
 			System.out.println(entry.getValue());
 		}

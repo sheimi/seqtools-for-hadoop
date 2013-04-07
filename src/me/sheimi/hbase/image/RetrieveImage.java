@@ -14,7 +14,10 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.WritableByteArrayComparable;
 import org.apache.hadoop.hbase.util.Bytes;
 
 public class RetrieveImage {
@@ -45,6 +48,13 @@ public class RetrieveImage {
 	public void initFilters(String[] args) {
 		for (String arg : args) {
 		}
+	}
+
+	public void addSingleColumnFilter(String columnFamily, String column,
+			WritableByteArrayComparable value, CompareOp op) {
+		SingleColumnValueFilter filter = new SingleColumnValueFilter(
+				Bytes.toBytes("meta"), Bytes.toBytes("width"), op, value);
+		filterList.addFilter(filter);
 	}
 
 	private void packImage(ResultScanner rs) {

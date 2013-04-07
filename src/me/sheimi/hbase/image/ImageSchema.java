@@ -23,6 +23,7 @@ public class ImageSchema {
 
 	public static final byte[] FAMILY_META = Bytes.toBytes("meta");
 	public static final byte[] FAMILY_DATA = Bytes.toBytes("data");
+	public static final byte[] FAMILY_TAG = Bytes.toBytes("tags");
 
 	public static final byte[] META_FILENAME = Bytes.toBytes("filename");
 	public static final byte[] META_SIZE = Bytes.toBytes("size");
@@ -48,6 +49,7 @@ public class ImageSchema {
 			HTableDescriptor tableDescriptor = new HTableDescriptor(TABLE_NAME);
 			tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_META));
 			tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_DATA));
+			tableDescriptor.addFamily(new HColumnDescriptor(FAMILY_TAG));
 			hBaseAdmin.createTable(tableDescriptor);
 			hBaseAdmin.close();
 		} catch (MasterNotRunningException e) {

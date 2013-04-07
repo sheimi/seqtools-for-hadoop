@@ -45,8 +45,6 @@ public class SequenceFileLoader extends FileInputLoadFunc {
 	protected byte keyType = DataType.CHARARRAY;
 	protected byte valType = DataType.BYTEARRAY;
 
-	private final byte BYTESWRITABLE = 100;
-
 	public SequenceFileLoader() {
 		mProtoTuple = new ArrayList<Object>(2);
 	}
@@ -79,13 +77,12 @@ public class SequenceFileLoader extends FileInputLoadFunc {
 		return t;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public InputFormat getInputFormat() throws IOException {
+	public InputFormat<Text, BytesWritable> getInputFormat() throws IOException {
 		return new SequenceFileInputFormat<Text, BytesWritable>();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void prepareToRead(RecordReader reader, PigSplit split)
 			throws IOException {

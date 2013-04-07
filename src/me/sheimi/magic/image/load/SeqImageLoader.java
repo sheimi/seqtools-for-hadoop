@@ -47,7 +47,7 @@ public class SeqImageLoader extends ImageLoader {
 			return null;
 		String filename = key.toString();
 		String[] fns = filename.split("/");
-		byte[] data = value.get();
+		byte[] data = value.getBytes();
 		Image image = Image.decode(data, fns[fns.length - 1]);
 		getNextEntry();
 		return image;
