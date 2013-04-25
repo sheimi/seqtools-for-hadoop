@@ -26,13 +26,15 @@ public class ImageSchema {
 	public static final byte[] FAMILY_TAG = Bytes.toBytes("tags");
 
 	public static final byte[] META_FILENAME = Bytes.toBytes("filename");
+	public static final byte[] META_FORMAT = Bytes.toBytes("format");
+	public static final byte[] META_SOURCE = Bytes.toBytes("source");
 	public static final byte[] META_SIZE = Bytes.toBytes("size");
 	public static final byte[] META_HEIGHT = Bytes.toBytes("height");
 	public static final byte[] META_WIDTH = Bytes.toBytes("width");
-	public static final byte[] META_FORMAT = Bytes.toBytes("format");
-	public static final byte[] META_SOURCE = Bytes.toBytes("source");
 
 	public static final byte[] DATA_IMAGE = Bytes.toBytes("image");
+	
+	public static final byte[] TAG_DEFAULT = Bytes.toBytes(1);
 
 	public static void createTable() {
 		LOG.info("starting create table ...");

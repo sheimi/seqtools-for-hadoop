@@ -1,4 +1,4 @@
-package me.sheimi.hbase.filter;
+package me.sheimi.hbase.filter.comparator;
 
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.filter.*;

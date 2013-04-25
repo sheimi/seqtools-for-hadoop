@@ -2,7 +2,7 @@ package me.sheimi.hbase;
 
 import java.io.IOException;
 
-import me.sheimi.hbase.filter.IntegerComparator;
+import me.sheimi.hbase.filter.comparator.IntegerComparator;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
