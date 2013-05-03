@@ -12,3 +12,5 @@ bin
 *.o
 *.jnilib
 logs/
+*.tar
+*.seq

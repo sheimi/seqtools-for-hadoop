@@ -8,8 +8,12 @@ import java.io.InputStream;
 
 import me.sheimi.magic.image.Image;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class FolderImageLoader extends ImageLoader {
 
+	private static final Log LOG = LogFactory.getLog(FolderImageLoader.class);
 	private File[] mFiles;
 	private int mIndex;
 
@@ -39,7 +43,7 @@ public class FolderImageLoader extends ImageLoader {
 		try {
 			InputStream is = new FileInputStream(file);
 			Image image = new Image(is, (int) file.length(), file.getName());
-			System.out.println(file.getName());
+			LOG.info(String.format("image: '%s' loaded", file.getName()));
 			is.close();
 			return image;
 		} catch (FileNotFoundException e) {
