@@ -13,6 +13,7 @@ public class FolderImageStorage extends ImageStorage {
 	private File mDir;
 
 	public FolderImageStorage(String filename) {
+		mDir = new File(filename);
 		if (!mDir.exists()) {
 			mDir.mkdir();
 		}
