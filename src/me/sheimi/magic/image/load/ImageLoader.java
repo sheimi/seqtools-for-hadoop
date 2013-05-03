@@ -10,6 +10,7 @@
  */
 package me.sheimi.magic.image.load;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -42,8 +43,16 @@ public abstract class ImageLoader implements Iterator<Image> {
 		String[] fns = filename.split("\\.");
 		String subfix = fns[fns.length - 1];
 		Class<? extends ImageLoader> loaderClz = loaders.get(subfix);
-		ImageLoader loader = ReflectionUtils.newInstance(loaderClz, filename);
-		return loader;
+		if (loaderClz != null) {
+			ImageLoader loader = ReflectionUtils.newInstance(loaderClz,
+					filename);
+			return loader;
+		}
+		File file = new File(filename);
+		if (file.isDirectory()) {
+			return new FolderImageLoader(filename);
+		}
+		return null;
 	}
 
 }
