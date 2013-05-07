@@ -11,10 +11,10 @@ public abstract class FilterCreator {
 	private static Map<String, FilterCreator> loaders;
 	static {
 		loaders = new HashMap<String, FilterCreator>();
-		loaders.put("-tag", new TagFilterCreator());
-		loaders.put("-source", new MetaSourceFilterCreator());
-		loaders.put("-filename", new MetaFilenameCreator());
-		loaders.put("-format", new MetaFormatCreator());
+		loaders.put("tag", new TagFilterCreator());
+		loaders.put("source", new MetaSourceFilterCreator());
+		loaders.put("filename", new MetaFilenameCreator());
+		loaders.put("format", new MetaFormatCreator());
 
 	}
 
@@ -22,6 +22,10 @@ public abstract class FilterCreator {
 		String option = options.next();
 		FilterCreator creator = loaders.get(option);
 		return creator;
+	}
+	
+	public static boolean isKey(String key) {
+		return loaders.containsKey(key);
 	}
 
 	public abstract void addFilter(OptionList options, FilterList filterList);

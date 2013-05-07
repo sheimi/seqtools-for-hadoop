@@ -14,7 +14,7 @@ public class TagFilterCreator extends FilterCreator {
 	public void addFilter(OptionList options, FilterList filterList) {
 		while (true) {
 			String tag = options.next();
-			if (tag.charAt(0) == '-') {
+			if (FilterCreator.isKey(tag)) {
 				break;
 			}
 			SingleColumnValueFilter filter = new SingleColumnValueFilter(
