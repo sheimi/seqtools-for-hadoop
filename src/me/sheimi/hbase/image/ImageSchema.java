@@ -33,6 +33,7 @@ public class ImageSchema {
 	public static final byte[] META_WIDTH = Bytes.toBytes("width");
 
 	public static final byte[] DATA_IMAGE = Bytes.toBytes("image");
+	public static final byte[] DATA_IMAGE_SMALL = Bytes.toBytes("image_small");
 	
 	public static final byte[] TAG_DEFAULT = Bytes.toBytes(1);
 

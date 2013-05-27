@@ -17,8 +17,16 @@
 
 package me.sheimi.magic.image;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
-import java.io.*;
+
+import javax.imageio.ImageIO;
 
 public class Image {
 
@@ -27,6 +35,8 @@ public class Image {
 	private String filename;
 	public static final int SIZE_LEN = 10;
 	public static final String SIZE_FORMATER = "%10d";
+	public static final int THUMBNAIL_HEIGHT = 200;
+	public static final int THUMBNAIL_WIDTH = 300;
 
 	public Image(byte[] image, String filename) {
 		this.filename = filename;
@@ -61,6 +71,38 @@ public class Image {
 		return encoded;
 	}
 
+	public byte[] getThumbnail() {
+		try {
+			BufferedImage image = ImageIO.read(new ByteArrayInputStream(
+					getImage()));
+			if (image.getHeight() < THUMBNAIL_HEIGHT
+					&& image.getWidth() < THUMBNAIL_WIDTH)
+				return getImage();
+			double rate = image.getWidth() / image.getHeight();
+			int height, width;
+			if (rate >= THUMBNAIL_WIDTH / THUMBNAIL_HEIGHT) {
+				width = THUMBNAIL_WIDTH;
+				height = (int) (width / rate);
+			} else {
+				height = THUMBNAIL_HEIGHT;
+				width = (int) (height * rate);
+			}
+
+			BufferedImage scaledBI = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g = scaledBI.createGraphics();
+			g.setComposite(AlphaComposite.Src);
+			g.drawImage(image, 0, 0, width, height, null);
+			g.dispose();
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(scaledBI, "png", os);
+			return os.toByteArray();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static Image decode(byte[] src, String filename) {
 		int size = decodeSize(src);
 		byte[] image = Arrays.copyOfRange(src, SIZE_LEN, SIZE_LEN + size);
@@ -76,5 +118,4 @@ public class Image {
 		int size = Integer.parseInt(new String(len).trim());
 		return size;
 	}
-
 }

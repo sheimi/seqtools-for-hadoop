@@ -22,11 +22,15 @@ extern "C" void histogram(vector<unsigned char> *input, string *output) {
     const float *ranges[] = { hranges, sranges };
     MatND hist;
 
+    cout << "function invoked internal 1" << endl;
+
     int channels[] = { 0, 1 };
     calcHist(&hsv, 1, channels, Mat(), hist, 2, histSize, ranges, true, false);
 
     double maxVal = 0;
     minMaxLoc(hist, 0, &maxVal, 0, 0);
+
+    cout << "function invoked internal 2" << endl;
 
     int scale = 10;
     Mat histImg = Mat::zeros(sbins * scale, hbins * 10, CV_8UC3);

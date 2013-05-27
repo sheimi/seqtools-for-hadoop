@@ -58,6 +58,8 @@ public class ArchiveImage {
 				Bytes.toBytes(image.getFilename()));
 		put.add(ImageSchema.FAMILY_DATA, ImageSchema.DATA_IMAGE,
 				image.getImage());
+		put.add(ImageSchema.FAMILY_DATA, ImageSchema.DATA_IMAGE_SMALL,
+				image.getThumbnail());
 		return put;
 	}
 
