@@ -18,19 +18,11 @@ FLAGS2= -m64 -shared -fPIC
 OUT=libcvjni.jnilib
 SRC=cvjni.cpp
 
-mac: clean cvjni_byte_string cvjni_byte_byte cvjni_byte_in test_cv
+mac: clean cvjni_byte_in test_cv
 
 cvjni_byte_in:
 	$(CC) -m64 -c -fPIC src/cvjni_byte_in.cpp -o src/cvjni_byte_in.o $(INCLUDE)
 	$(CC) -dynamiclib src/cvjni_byte_in.o -o src/libcvjni_byte_in.jnilib
-
-cvjni_byte_string:
-	$(CC) -m64 -c -fPIC src/cvjni_byte_string.cpp -o src/cvjni_byte_string.o $(INCLUDE)
-	$(CC) -dynamiclib src/cvjni_byte_string.o -o src/libcvjni_byte_string.jnilib
-
-cvjni_byte_byte:
-	$(CC) -m64 -c -fPIC src/cvjni_byte_byte.cpp -o src/cvjni_byte_byte.o $(INCLUDE)
-	$(CC) -dynamiclib src/cvjni_byte_byte.o -o src/libcvjni_byte_byte.jnilib
 
 test_cv:
 	$(CC) -m64 -c -fPIC test_code/cvcv.cpp -o test_code/cvcv.o $(INCLUDE)
