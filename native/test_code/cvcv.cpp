@@ -12,5 +12,6 @@ extern "C" void cvcv(vector<unsigned char> *input,
     Mat image = imdecode(*input, CV_LOAD_IMAGE_COLOR);
     input->clear();
     imencode(".bmp", image, *output); // encode the Mat to bmp
+    cout << (*output).size() << endl;
     cout << "function invoked end" << endl;
 }

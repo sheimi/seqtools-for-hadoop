@@ -66,8 +66,8 @@ JNIEXPORT jbyteArray JNICALL Java_me_sheimi_pig_eval_BytesNativeEvalFunc_invokeN
     cv_proxy(&media_src_input, &cv_proxy_output);
     dlclose(handle);
 
-    jbyteArray result = env->NewByteArray(media_src_input.size());
-    env->SetByteArrayRegion(result, 0, media_src_input.size(),
+    jbyteArray result = env->NewByteArray(cv_proxy_output.size());
+    env->SetByteArrayRegion(result, 0, cv_proxy_output.size(),
             reinterpret_cast<jbyte*>(&cv_proxy_output[0]));
 
     return result;
