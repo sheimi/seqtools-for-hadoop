@@ -21,12 +21,11 @@ Examples
 
 ### Pig Latin
 
-    register seqtools.jar;
-    a = LOAD '/seq_test'  USING me.sheimi.pig.storage.SequenceFileLoader AS (name, data);
-    b = foreach a generate name;
-    -- Java
-    c = foreach a generate name, me.sheimi.pig.eval.demo.ToBMP(data);
-    -- Native (CPP and OpenCV)
-    -- should copy libcvjni.so to java.library.path
-    c = foreach a generate name, me.sheimi.pig.eval.BytesNativeEvalFunc(data);
-    store c into '/output' using me.sheimi.pig.storage.SequenceFileStorage;
+    register seqtools.jar                            
+    a = LOAD '/test'  USING me.sheimi.pig.storage.SequenceFileLoader AS (name, data);                                    
+    b = foreach a generate name, me.sheimi.pig.eval.BytesNativeEvalFunc(data, '/tmp/ug-web/shell-env/0/test/cvcv.so', 'cvcv');
+    store b into '/output' using me.sheimi.pig.storage.SequenceFileStorage;
+
+    c = foreach a generate name,
+    me.sheimi.pig.eval.BytesStringNativeEvalFunc(data, '/tmp/ug-web/shell-env/0/test/cv_histogram.so', 'histogram');
+    dump c
